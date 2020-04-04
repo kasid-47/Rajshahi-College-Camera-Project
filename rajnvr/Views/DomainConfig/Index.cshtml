@@ -1,0 +1,39 @@
+﻿@using IpCameraSetup.Models
+@using RSLERP.DataManager.Entity
+@model IpCameraSetup.Models.ViewModel
+@{
+    ViewBag.Title = "Domain Config Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">My Dashboard</li>
+    </ol>
+    <!-- Icon Cards-->
+    <div class="row">
+        <div class="col-xl-10 col-sm-6 mb-3">
+            <h2>DomainConfig</h2>
+            @*<a class="btn btn-info" href="~/DomainConfig/Load">Add</a>*@
+            @{Html.RenderAction("SubmitStatus", "Common", new { status = Model.CommitStatus, message = Model.SaveChangeMessage }); }
+            <table class="table">
+                <thead> <tr> <th>ID</th> <th>Base Path</th><th>Segment Time</th><th>Action</th> </tr> </thead>
+                <tbody>
+                    @foreach (DomainConfigs dcon in Model.VM_DOMAINCONFIGS)
+                    {
+                        <tr>
+                            <td>@dcon.id</td>
+                            <td>@dcon.basepath</td>
+                            <td>@dcon.segmenttime</td>
+                            <td><a href="~/DomainConfig/Load?id=@dcon.id">Edit</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

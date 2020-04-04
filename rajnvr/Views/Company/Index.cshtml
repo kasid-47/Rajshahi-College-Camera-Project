@@ -1,0 +1,42 @@
+﻿@using IpCameraSetup.Models
+@using RSLERP.DataManager.Entity
+@model IpCameraSetup.Models.ViewModel
+@{
+    ViewBag.Title = "Company Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">My Dashboard</li>
+    </ol>
+    <!-- Icon Cards-->
+    <div class="row">
+        <div class="col-xl-10 col-sm-6 mb-3">
+            <h2>Companies</h2>
+            <a class="btn btn-info" href="~/Company/Load">Add</a>
+            @{Html.RenderAction("SubmitStatus", "Common", new { status = Model.CommitStatus, message = Model.SaveChangeMessage }); }
+            <table class="table">
+                <thead> <tr> <th>ID</th><th>Name</th><th>Contact Person</th><th>Mobile No.</th><th>Address</th><th>Action</th> </tr> </thead>
+                <tbody>
+                    @foreach (Companys com in Model.VM_COMPANYS)
+                    {
+                        <tr>
+                            <td>@com.id</td>
+                            <td>@com.name</td>
+                            <td>@com.contact_person</td>
+                            <td>@com.mobile</td>
+                            <td>@com.address</td>
+                            <td><a href="~/Company/Load?id=@com.id">Edit</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

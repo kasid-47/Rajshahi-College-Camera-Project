@@ -1,0 +1,20 @@
+﻿@using RSLERP.DataManager.Entity
+
+@model IpCameraSetup.Models.ViewModel
+
+<div class="form-group company">
+@if (Model.VM_CLASSROOMS.Count > 0)
+{
+    <label for="inputPassword3" class="col-sm-2 control-label">Classroom</label>
+    <div class="col-sm-10">
+       
+            <select name="VM_IPCAMERACONFIG.classroom_id" class="form-control">
+                @foreach (Classrooms clsrm in Model.VM_CLASSROOMS)
+                {
+                    <option @((Model.VM_IPCAMERACONFIG.classroom_id == clsrm.id) ? "selected" : "") value="@clsrm.id">@clsrm.classroom_name</option>
+                }
+            </select>
+        @*@UserHelper.ModelStateMsg(Model.Model_State, "VM_IPCAMERACONFIG.classroom_id")*@
+    </div>
+}
+</div>

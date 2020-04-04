@@ -1,0 +1,103 @@
+﻿@using IpCameraSetup.Models
+@using RSLERP.DataManager.Entity
+@{
+    ViewBag.Title = "IP Camera Config Load";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="margin-left:15px;">IP Camera Config</h2>
+<a style="margin-left:15px; margin-bottom:15px; margin-top:10px;" href="~/IpCameraConfig" class="btn btn-info">« Back</a>
+
+@{Html.RenderAction("SubmitStatus", "Common", new { status = Model.CommitStatus, message = Model.SaveChangeMessage }); }
+@using (Html.BeginForm("Store", HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString(), FormMethod.Post, new { id = "form", data_toggle = "validator", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" value="@Model.VM_IPCAMERACONFIG.id" name="VM_IPCAMERACONFIG.id" />
+    <div class="form-group">
+        <label for="inputEmail3" class="col-sm-2 control-label">IP</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="VM_IPCAMERACONFIG.ip" id="inputEmail3" placeholder="IP" value="@Model.VM_IPCAMERACONFIG.ip">
+            @UserHelper.ModelStateMsg(Model.Model_State, "VM_IPCAMERACONFIG.ip")
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputEmail3" class="col-sm-2 control-label">Camera Name</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="VM_IPCAMERACONFIG.camera_name" id="inputEmail3" placeholder="Camera Name" value="@Model.VM_IPCAMERACONFIG.camera_name">
+            @UserHelper.ModelStateMsg(Model.Model_State, "VM_IPCAMERACONFIG.camera_name")
+         </div>
+    </div>
+    <div class="form-group">
+        <label for="inputEmail3" class="col-sm-2 control-label">Camera Username</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="VM_IPCAMERACONFIG.camera_username" id="inputEmail3" placeholder="Camera Username" value="@Model.VM_IPCAMERACONFIG.camera_username">
+            @UserHelper.ModelStateMsg(Model.Model_State, "VM_IPCAMERACONFIG.camera_username")
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputEmail3" class="col-sm-2 control-label">Camera Password</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="VM_IPCAMERACONFIG.camera_password" id="inputEmail3" placeholder="Camera Password" value="@Model.VM_IPCAMERACONFIG.camera_password">
+            @UserHelper.ModelStateMsg(Model.Model_State, "VM_IPCAMERACONFIG.camera_password")
+        </div>
+    </div>
+    if (Model.VM_IPCAMERACONFIG.path != null)
+    {
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">Path</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" readonly="readonly" name="VM_IPCAMERACONFIG.path" id="inputEmail3" placeholder="Camera Path" value="@Model.VM_IPCAMERACONFIG.path">
+                @UserHelper.ModelStateMsg(Model.Model_State, "VM_IPCAMERACONFIG.path")
+            </div>
+        </div>
+    }
+    else
+    {
+        <input type="hidden" name="VM_IPCAMERACONFIG.path" id="inputEmail3" placeholder="Camera Path" value="path" />
+    }
+
+    <div class="form-group">
+        <label for="inputPassword3" class="col-sm-2 control-label">Department</label>
+        <div class="col-sm-10">
+            <select class="form-control" name="VM_IPCAMERACONFIG.department_id" id="ddlDept" onchange="selectViewChange(0)">
+                <option value="0">Select Department</option>
+                @foreach (Departments dep in Model.VM_DEPARTMENTS)
+                {
+                    <option @(Model.VM_IPCAMERACONFIG.department_id == ""+@dep.id ?"selected":"") value="@dep.id">@dep.name</option>
+                }
+            </select>
+            @UserHelper.ModelStateMsg(Model.Model_State, "VM_IPCAMERACONFIG.department_id")
+        </div>
+    </div>
+    <div id="clssRmID"></div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-info">@(Model.VM_IPCAMERACONFIG.id == 0 ? "Save" : "Update")</button>
+        </div>
+    </div>
+}
+
+@section masterjs
+{
+    <script type="text/javascript">
+        $(function () {
+            if(@Model.VM_IPCAMERACONFIG.classroom_id!=0)
+            {
+                   selectViewChange('@Model.VM_IPCAMERACONFIG.classroom_id');
+            }
+        });
+        function selectViewChange(classID)
+        {
+            var deptID = $("#ddlDept").val();
+            $.ajax({
+                url: '/@HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString()/SelectClassRoom?deptID=' + deptID + '&classID=' + classID,
+                type: 'GET',
+                success: function (data) {
+                    $("#clssRmID").html(data);
+                },
+                error: function () {
+                }
+            });
+        }
+    </script>
+}

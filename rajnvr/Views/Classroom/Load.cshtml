@@ -1,0 +1,67 @@
+﻿@using IpCameraSetup.Models
+@using RSLERP.DataManager.Entity
+@{
+    ViewBag.Title = "Classroom Load";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="margin-left:15px;">Classroom</h2>
+<a style="margin-left:15px; margin-bottom:15px; margin-top:10px;" href="~/Classroom" class="btn btn-info">« Back</a>
+@{Html.RenderAction("SubmitStatus", "Common", new { status = Model.CommitStatus, message = Model.SaveChangeMessage }); }
+@using (Html.BeginForm("Store", HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString(), FormMethod.Post, new { id = "form", data_toggle = "validator", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" value="@Model.VM_CLASSROOM.id" name="VM_CLASSROOM.id" />
+    <div class="form-group">
+        <label for="inputEmail3" class="col-sm-2 control-label">Classroom Name</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="VM_CLASSROOM.classroom_name" id="inputEmail3" placeholder="Classroom Name" value="@Model.VM_CLASSROOM.classroom_name">
+            @UserHelper.ModelStateMsg(Model.Model_State, "VM_CLASSROOM.classroom_name")
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputEmail3" class="col-sm-2 control-label">Remarks</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name=".remarks" id="inputEmail3" placeholder="Remarks" value="@Model.VM_CLASSROOM.remarks">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputPassword3" class="col-sm-2 control-label">Department</label>
+        <div class="col-sm-10">
+            <select class="form-control" name="VM_CLASSROOM.department_id">
+                @foreach (Departments dep in Model.VM_DEPARTMENTS)
+                {
+                    <option @(Model.VM_CLASSROOM.department_id == "" + @dep.id ? "selected" : "") value="@dep.id">@dep.name</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-info">@(Model.VM_CLASSROOM.id == 0 ? "Save" : "Update")</button>
+        </div>
+    </div>
+}
+
+@section masterjs
+{
+    <script type="text/javascript">
+
+        function selectViewChange(obj)
+        {
+            //var eventUrl=$('#form').attr("action").replace('store', 'onchangeevent');
+            //$('#form').attr("action", eventUrl);
+            //obj.form.submit();
+
+            if($(obj).val()=="2")
+            {
+                $(".company").css("display", "block");
+            }
+            else
+            {
+                $(".company").css("display", "none");
+            }
+        }
+    </script>
+
+}

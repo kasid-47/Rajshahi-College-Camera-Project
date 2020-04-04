@@ -1,0 +1,68 @@
+﻿@using IpCameraSetup.Models
+@using RSLERP.DataManager.Entity
+@{
+    ViewBag.Title = "IP Camera Config Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">My Dashboard</li>
+    </ol>
+    <div class="row">
+        <div class="col-xl-10 col-sm-6 mb-3">
+            <h2>IP Camera Search</h2>
+        @using (Html.BeginForm("Search", HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString(), FormMethod.Post, new { id = "form", data_toggle = "validator", enctype = "multipart/form-data" }))
+        {
+            <div class="form-group">
+                <label for="inputPassword3" class="col-sm-2 control-label">Department</label>
+                <div class="col-sm-6">
+                    <select class="form-control" name="VM_DEPARTMENT.id" id="ddlDept" onchange="selectViewChange(0)">
+                        <option value="">Select Department</option>
+                        @foreach (Departments dep in Model.VM_DEPARTMENTS)
+                        {
+                            <option @(Model.VM_DEPARTMENT.id ==  @dep.id ? "selected" : "") value="@dep.id">@dep.name</option>
+                        }
+                    </select>
+                </div>
+            </div>           
+             <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-info">Search</button>
+                </div>
+            </div>
+        }
+        </div>
+    </div>
+            <!-- Icon Cards-->
+            <div class="row">
+                <div class="col-xl-10 col-sm-6 mb-3">
+                    <h2>IP Camera Config</h2>
+                    <a class="btn btn-info" href="~/IPCameraConfig/Load">Add</a>
+                    @{Html.RenderAction("SubmitStatus", "Common", new { status = Model.CommitStatus, message = Model.SaveChangeMessage }); }
+                    <table class="table">
+                        <thead> <tr> <th>ID</th><th>IP</th><th>Camera Name</th><th>Department Name</th><th>Company Name</th><th>Classroom Name</th><th>Action</th> </tr> </thead>
+                        <tbody>
+                            @foreach (IPCameraConfigs ipcc in Model.VM_IPCAMERACONFIGS)
+                            {
+                                <tr>
+                                    <td>@ipcc.id</td>
+                                    <td>@ipcc.ip</td>
+                                    <td>@ipcc.camera_name</td>
+                                    <td>@ipcc.DepartmentName</td>
+                                    <td>@ipcc.CompanyName</td>
+                                    <td>@ipcc.ClassroomName</td>
+                                    <td><a href="~/Stream/view?id=@ipcc.path"><i class="fas fa-video"></i></a></td>
+                                    <td><a href="~/IPCameraConfig/Load?id=@ipcc.id">Edit</a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+

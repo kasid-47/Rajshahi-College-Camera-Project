@@ -1,0 +1,30 @@
+﻿@model String
+@{
+    ViewBag.Title = "view";
+    Layout = "~/Views/Shared/_LayoutStream.cshtml";
+}
+
+<h2>view</h2>
+
+<video width="100%" controls id="myVideo" autoplay>
+    <source src="~/stream?id=@Model" type="video/mp4">
+</video>
+
+
+
+@section masterjs
+{
+    <script type="text/javascript">
+        $(function () {
+
+            document.getElementById('myVideo').addEventListener('ended', myHandler, false);
+            function myHandler(e) {
+
+                var videoFile = "/stream?id=@Model
+                $(' #myVideo source').attr('src', videoFile);
+                $("#myVideo")[0].load();
+            }
+
+        });
+    </script>
+    }

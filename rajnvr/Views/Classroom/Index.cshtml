@@ -1,0 +1,40 @@
+﻿@using IpCameraSetup.Models
+@using RSLERP.DataManager.Entity
+@{
+    ViewBag.Title = "Classroom Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">My Dashboard</li>
+    </ol>
+    <!-- Icon Cards-->
+    <div class="row">
+        <div class="col-xl-10 col-sm-6 mb-3">
+            <h2>Classrooms</h2>
+            <a class="btn btn-info" href="~/Classroom/Load">Add</a>
+            @{Html.RenderAction("SubmitStatus", "Common", new { status = Model.CommitStatus, message = Model.SaveChangeMessage }); }
+            <table class="table">
+                <thead> <tr> <th>ID</th><th>Name</th><th>Remarks</th><th>Department</th><th>Company</th><th>Action</th> </tr> </thead>
+                <tbody>
+                    @foreach (Classrooms clr in Model.VM_CLASSROOMS)
+                    {
+                        <tr>
+                            <td>@clr.id</td>
+                            <td>@clr.classroom_name</td>
+                            <td>@clr.remarks</td>
+                            <td>@clr.CompanyName</td>
+                            <td>@clr.DepartmentName</td>
+                            <td><a href="~/Classroom/Load?id=@clr.id">Edit</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

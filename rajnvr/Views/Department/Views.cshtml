@@ -1,0 +1,43 @@
+﻿@using IpCameraSetup.Models
+@using RSLERP.DataManager.Entity
+@model IpCameraSetup.Models.ViewModel
+@{
+    ViewBag.Title = "Department Views";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Department Datails</li>
+    </ol>
+    <!-- Icon Cards-->
+    <div class="row">
+        <div class="col-xl-10 col-sm-6 mb-3">
+            <h2>User Details of @Model.VM_DEPARTMENT.name</h2>
+            <a style="margin-left:15px; margin-bottom:15px; margin-top:10px;" href="~/Department" class="btn btn-info">« Back</a>
+            <ul class="list-group">
+                <li class="list-group-item">Department Name : @Model.VM_DEPARTMENT.name</li>
+                <li class="list-group-item">Remarks         : @Model.VM_DEPARTMENT.remarks</li>
+                <li class="list-group-item">Company         : @Model.VM_DEPARTMENT.CompanyName</li>
+                @*<li class="list-group-item">Departments :</li>*@
+            </ul>
+            <br>
+            <table class="table">
+                <thead> <tr> <th>Users</th> </tr> </thead>
+                <tbody>
+                    @if (Model.VM_USERDEPTS.Count > 0)
+                    {
+                        foreach (UserDepts usd in Model.VM_USERDEPTS)
+                        {
+                            <tr> <td>&#9673 @usd.username</td> </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+﻿@model IpCameraSetup.Models.ViewModel
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+<div class="card card-login mx-auto mt-5">
+    @if (Model.SaveChangeMessage != null && Model.SaveChangeMessage != "")
+    {
+        <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4><i class="icon fa fa-ban"></i> Alert!</h4>            
+            @Html.Raw(Model.SaveChangeMessage)
+        </div>
+    }
+   
+    <div class="card-header">Login</div>
+    <div class="card-body">
+        @using (Html.BeginForm("SignUp", HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString(), FormMethod.Post, new { id = "form", data_toggle = "validator", enctype = "multipart/form-data" }))
+        {
+            @*@Html.AntiForgeryToken()*@
+            <div class="form-group">
+                <label for="exampleInputEmail1">Username</label>
+                <input class="form-control" id="username" type="text" aria-describedby="emailHelp" placeholder="Enter Username" name="VM_USER.username"value="@Model.VM_USER.username">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input class="form-control" id="exampleInputPassword1" type="password" placeholder="Password" name="VM_USER.password"value="@Model.VM_USER.password">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block" name="Login">Login</button>
+        }
+    </div>
+</div>
+

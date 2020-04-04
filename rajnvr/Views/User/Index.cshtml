@@ -1,0 +1,41 @@
+﻿@using IpCameraSetup.Models
+@using RSLERP.DataManager.Entity
+@model IpCameraSetup.Models.ViewModel
+@{
+    ViewBag.Title = "User Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">My Dashboard</li>
+    </ol>
+    <!-- Icon Cards-->
+    <div class="row">
+        <div class="col-xl-10 col-sm-6 mb-3">
+            <h2>Users</h2>
+            <a class="btn btn-info" href="~/User/Load">Add</a>
+            @{Html.RenderAction("SubmitStatus", "Common", new { status = Model.CommitStatus, message = Model.SaveChangeMessage }); }
+            <table class="table">
+                <thead> <tr> <th>ID</th><th>Username</th><th>Role</th><th>Company Name</th><th>Details</th><th>Action</th> </tr> </thead>
+                <tbody>
+                    @foreach (Users usr in Model.VM_USERS)
+                    {
+                        <tr>
+                            <td>@usr.id</td>
+                            <td>@usr.username</td>
+                            <td>@usr.RoleName</td>
+                            <td>@usr.CompanyName</td>
+                            <td><a href="~/User/Views?id=@usr.id" class='fa fa-external-link'> View</a></td>
+                            <td><a href="~/User/Load?id=@usr.id">Edit</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+          </div>
+</div>
+</div>

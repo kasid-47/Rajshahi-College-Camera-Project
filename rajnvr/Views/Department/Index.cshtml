@@ -1,0 +1,40 @@
+﻿@using IpCameraSetup.Models
+@using RSLERP.DataManager.Entity
+@model IpCameraSetup.Models.ViewModel
+@{
+    ViewBag.Title = "Department Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">My Dashboard</li>
+    </ol>
+    <!-- Icon Cards-->
+    <div class="row">
+        <div class="col-xl-10 col-sm-6 mb-3">
+            <h2>Departments</h2>
+            <a class="btn btn-info" href="~/Department/Load">Add</a>
+            @{Html.RenderAction("SubmitStatus", "Common", new { status = Model.CommitStatus, message = Model.SaveChangeMessage }); }
+            <table class="table">
+                <thead> <tr> <th>ID</th> <th>Name</th><th>Remarks</th><th>Details</th><th>Action</th> </tr> </thead>
+                <tbody>
+                    @foreach (Departments dep in Model.VM_DEPARTMENTS)
+                    {
+                        <tr>
+                            <td>@dep.id</td>
+                            <td>@dep.name</td>
+                            <td>@dep.remarks</td>
+                            <td><a href="~/Department/Views?id=@dep.id" class='fa fa-external-link'> View</a></td>
+                            <td><a href="~/Department/Load?id=@dep.id">Edit</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

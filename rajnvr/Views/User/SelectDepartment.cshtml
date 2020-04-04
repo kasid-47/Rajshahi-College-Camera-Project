@@ -1,0 +1,41 @@
+﻿
+@using RSLERP.DataManager.Entity
+
+@model IpCameraSetup.Models.ViewModel
+
+<div class="form-group company">
+    @if (Model.VM_USERDEPTS.Count > 0)
+    {
+        <label for="inputPassword3" class="col-sm-2 control-label">Department</label>
+        <div class="col-sm-10">
+            @{ 
+                int i = 0;
+            }
+            @foreach (UserDepts usd in Model.VM_USERDEPTS)
+            {
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <div class="checkbox">
+                           
+                                @UserHelper.CheckBox("VM_USERDEPTS[" + i + "].choose", usd.choose, "" + usd.department_id, "VM_USERDEPTS[" + i + "].department_id", "chkClss") <label>@usd.department_name</label>
+                                @{
+                                    i++;
+                                }
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+            @*<select name="VM_USERDEPT.department_id" class="form-control">
+                @foreach (Departments dep in Model.VM_DEPARTMENTS)
+                {
+                    <option  value="@dep.id">@dep.name</option>
+                }
+            </select>*@
+
+            @*@UserHelper.ModelStateMsg(Model.Model_State, "VM_USERDEPT.department_id")*@
+        </div>
+    }
+</div>
